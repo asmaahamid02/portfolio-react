@@ -13,20 +13,30 @@ import {
 import FullScreenSection from './FullScreenSection'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
+import useSubmit from '../hooks/useSubmit'
 
 const ContactMeSection = () => {
-    const formik = useFormik({
-        initialValues: {
-            firstName: '',
-            email: '',
-            type: '',
-            message: '',
-        },
-        onSubmit: values => {
-    
-        },
-        validationSchema: Yup.object({}),
-    });
+  const { isLoading, response, submit } = useSubmit()
+  const formik = useFormik({
+    initialValues: {
+      firstName: '',
+      email: '',
+      type: '',
+      message: '',
+    },
+    onSubmit: (values) => {
+      submit('', values)
+    },
+    validationSchema: Yup.object({
+      firstName: Yup.string()
+        .required('Required')
+        .min(5, 'Must be at least 5 characters'),
+      email: Yup.string().email('Invalid email address').required('Required'),
+      message: Yup.string()
+        .required('Required')
+        .min(25, 'Must be at least 25 characters'),
+    }),
+  })
 
   return (
     <FullScreenSection
@@ -40,25 +50,42 @@ const ContactMeSection = () => {
           Contact Me
         </Heading>
         <Box p={6} rounded='md' w='100%'>
-          <form>
+          <form
+            onSubmit={(e) => {
+              formik.handleSubmit(e)
+            }}
+          >
             <VStack spacing={4}>
-              <FormControl isInvalid={false}>
+              <FormControl
+                isInvalid={formik.errors.firstName && formik.touched.firstName}
+              >
                 <FormLabel htmlFor='firstName'>Name</FormLabel>
                 <Input
                   id='firstName'
                   placeholder='First Name'
-                  name='firstName'
+                  {...formik.getFieldProps('firstName')}
                 />
-                <FormErrorMessage></FormErrorMessage>
+                <FormErrorMessage>{formik.errors.firstName}</FormErrorMessage>
               </FormControl>
-              <FormControl isInvalid={false}>
+              <FormControl
+                isInvalid={formik.errors.email && formik.touched.email}
+              >
                 <FormLabel htmlFor='email'>Email Adress</FormLabel>
-                <Input id='email' placeholder='Email' name='email' />
-                <FormErrorMessage></FormErrorMessage>
+                <Input
+                  id='email'
+                  placeholder='Email'
+                  {...formik.getFieldProps('email')}
+                />
+                <FormErrorMessage>{formik.errors.email}</FormErrorMessage>
               </FormControl>
               <FormControl isInvalid={false}>
                 <FormLabel htmlFor='type'>Type of enquiry</FormLabel>
-                <Select color="grey" id='type' name='type' placeholder='Select option'>
+                <Select
+                  color='grey'
+                  id='type'
+                  placeholder='Select option'
+              {...formik.getFieldProps('type')}
+                >
                   <option value='hireMe'>Freelance project proposal</option>
                   <option value='openSource'>
                     Open source consultancy session
@@ -66,17 +93,24 @@ const ContactMeSection = () => {
                   <option value='other'>Other</option>
                 </Select>
               </FormControl>
-              <FormControl isInvalid={false}>
+              <FormControl
+                isInvalid={formik.errors.message && formik.touched.message}
+              >
                 <FormLabel htmlFor='message'>Your message</FormLabel>
                 <Textarea
-                  id='message'
-                  name='message'
+                  id='message'               
                   placeholder='Your message'
                   height={250}
+                  {...formik.getFieldProps('message')}
                 />
-                <FormErrorMessage></FormErrorMessage>
+                <FormErrorMessage>{formik.errors.message}</FormErrorMessage>
               </FormControl>
-              <Button type='submit' colorScheme='gray' color="purple" width='full'>
+              <Button
+                type='submit'
+                colorScheme='gray'
+                color='purple'
+                width='full'
+              >
                 Send
               </Button>
             </VStack>
