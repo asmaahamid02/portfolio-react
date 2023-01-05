@@ -3,7 +3,6 @@ import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const Card = ({ title, description, imageSrc, gitHubRepoLink }) => {
-  console.log(description)
   return (
     <VStack
       backgroundColor='white'

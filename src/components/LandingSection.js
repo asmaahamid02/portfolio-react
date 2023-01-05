@@ -3,7 +3,7 @@ import { VStack, Heading, Avatar } from '@chakra-ui/react'
 
 const greeting = 'Hello, I am Asmaa Hamid'
 const brief = 'I am a Junior Web Developer'
-const avatar = 'https://i.pravatar.cc/150?img=8'
+const avatar = 'https://i.pravatar.cc/150?img=2'
 
 const LandingSection = () => {
   return (
