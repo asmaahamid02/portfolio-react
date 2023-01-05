@@ -18,18 +18,18 @@
 # Implementation
 
 ### Landing Section
-<img src="./ReadmeImages/landing.PNG" alt="Landing" width="500"/>
+<img src="./ReadmeImages/landing.PNG" alt="Landing" />
 
 ### Projects Section
-<img src="./ReadmeImages/projects.PNG" alt="Projects" width="500"/>
+<img src="./ReadmeImages/projects.PNG" alt="Projects" />
 
 ### Contact Section
-<img src="./ReadmeImages/contact.PNG" alt="Contact" width="500"/>
+<img src="./ReadmeImages/contact.PNG" alt="Contact" />
 
 ### Show/Hide Header
-<img src="./ReadmeImages/scrollableHeader.gif" alt="Show/Hide" width="500"/>
+<img src="./ReadmeImages/scrollableHeader.gif" alt="Show/Hide" />
 
 ### Form Submission
-<img src="./ReadmeImages/alert.gif" alt="Form Submission" width="500"/>
+<img src="./ReadmeImages/alert.gif" alt="Form Submission" />
 
 
