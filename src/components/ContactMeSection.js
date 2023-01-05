@@ -9,14 +9,18 @@ import {
   Button,
   Heading,
   VStack,
+  CircularProgress,
+  Alert,
 } from '@chakra-ui/react'
 import FullScreenSection from './FullScreenSection'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import useSubmit from '../hooks/useSubmit'
+import { useAlertContext } from '../context/AlertContext'
 
 const ContactMeSection = () => {
   const { isLoading, response, submit } = useSubmit()
+  const { onOpen } = useAlertContext()
   const formik = useFormik({
     initialValues: {
       firstName: '',
@@ -26,6 +30,8 @@ const ContactMeSection = () => {
     },
     onSubmit: (values) => {
       submit('', values)
+
+      onOpen(response.type, response.message)
     },
     validationSchema: Yup.object({
       firstName: Yup.string()
@@ -84,7 +90,7 @@ const ContactMeSection = () => {
                   color='grey'
                   id='type'
                   placeholder='Select option'
-              {...formik.getFieldProps('type')}
+                  {...formik.getFieldProps('type')}
                 >
                   <option value='hireMe'>Freelance project proposal</option>
                   <option value='openSource'>
@@ -98,21 +104,25 @@ const ContactMeSection = () => {
               >
                 <FormLabel htmlFor='message'>Your message</FormLabel>
                 <Textarea
-                  id='message'               
+                  id='message'
                   placeholder='Your message'
                   height={250}
                   {...formik.getFieldProps('message')}
                 />
                 <FormErrorMessage>{formik.errors.message}</FormErrorMessage>
               </FormControl>
-              <Button
-                type='submit'
-                colorScheme='gray'
-                color='purple'
-                width='full'
-              >
-                Send
-              </Button>
+              {isLoading ? (
+                <CircularProgress isIndeterminate color='purple' />
+              ) : (
+                <Button
+                  type='submit'
+                  colorScheme='gray'
+                  color='purple'
+                  width='full'
+                >
+                  Send
+                </Button>
+              )}
             </VStack>
           </form>
         </Box>
